@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ResponsiveButton extends StatelessWidget {
+class ResponsiveButtonReversed extends StatelessWidget {
   bool? isResponsive;
   double? width;
   double? height; 
-  ResponsiveButton({Key? key, this.width, this.height, this.isResponsive=false}) : super(key: key);
+  ResponsiveButtonReversed({Key? key, this.width, this.height, this.isResponsive=false}) : super(key: key);
 
   @override
-  
   Widget build(BuildContext context) {
     return Container(
       width: 30,
@@ -19,7 +18,7 @@ class ResponsiveButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset("assets/images/arrow.png",)
+          Image.asset("assets/images/arrow_reversed.png",)
         ]
       )
     );
