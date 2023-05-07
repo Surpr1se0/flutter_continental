@@ -63,6 +63,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/continental.png
+    - assets/images/arrow.png
+    - assets/images/arrow_reversed.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
