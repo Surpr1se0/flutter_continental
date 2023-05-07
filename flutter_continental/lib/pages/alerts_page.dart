@@ -23,12 +23,32 @@ class AlertsPage extends StatelessWidget {
                       color: Colors.white10,
                     ),
                     child: textSection,
-                    ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Press me'),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green),
+                        ),
+                        child: const Text('Yes'),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red.shade600),
+                        ),
+                        child: const Text('No'),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -40,15 +60,11 @@ class AlertsPage extends StatelessWidget {
   }
 }
 
-
 Widget textSection = const Padding(
   padding: EdgeInsets.all(3),
   child: Text(
     'Are you sure you wish to send an alert?',
     softWrap: true,
-    style: TextStyle(
-      fontSize: 15,
-      color: Colors.white
-      ),
+    style: TextStyle(fontSize: 15, color: Colors.white),
   ),
 );
