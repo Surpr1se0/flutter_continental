@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AlertsPage extends StatelessWidget {
-  const AlertsPage({Key? key});
+class ConfirmationGoodPage extends StatelessWidget {
+  const ConfirmationGoodPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,13 @@ class AlertsPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    Icons.security_update_warning_outlined,
+                    Icons.home_rounded,
                     size: 40.0,
                     color: Colors.orangeAccent.shade400,
                   ),
                   Container(
                     width: 170,
-                    height: 42,
+                    height: 25,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: myColor,
@@ -41,18 +41,7 @@ class AlertsPage extends StatelessWidget {
                           backgroundColor:
                               MaterialStateProperty.all(Colors.green),
                         ),
-                        child: const Text('Yes'),
-                      ),
-                      const SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.red.shade600),
-                        ),
-                        child: const Text('No'),
+                        child: const Text('Home'),
                       ),
                     ],
                   ),
@@ -69,7 +58,7 @@ class AlertsPage extends StatelessWidget {
 Widget textSection = const Padding(
   padding: EdgeInsets.all(3),
   child: Text(
-    'Are you sure you wish to send an alert?',
+    'Envio confirmado!',
     softWrap: true,
     style: TextStyle(fontSize: 15, color: Colors.white),
     textAlign: TextAlign.center,

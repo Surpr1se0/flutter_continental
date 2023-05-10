@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_continental/widgets/app_large_text.dart';
 import 'package:flutter_continental/widgets/app_text.dart';
+import 'package:flutter_continental/widgets/lists_button.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:intl/intl.dart';
 
@@ -47,9 +48,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                       ),
                       AppText(
-                          text: formattedDate,
-                          size: 7,
-                          color: Colors.white),
+                          text: formattedDate, size: 7, color: Colors.white),
                     ],
                   ),
                   const SizedBox(height: 3),
@@ -64,8 +63,16 @@ class _WelcomePageState extends State<WelcomePage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 3),
-                  AlertButton(),
+                  const SizedBox(height: 6,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AlertButton(),
+                      const SizedBox(width: 6,),
+                      ListsButton(heroTag: 'button1'),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
                   AppLargeText(text: 'Welcome', size: 17),
                   AppText(
                     text: 'José Almeida',

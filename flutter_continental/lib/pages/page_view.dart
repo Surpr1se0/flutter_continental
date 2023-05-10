@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_continental/pages/notifications_page.dart';
-import 'package:flutter_continental/pages/third_page.dart';
+import 'package:flutter_continental/pages/avarias_page.dart';
 import 'package:flutter_continental/pages/welcome_page.dart';
 
 class PageViewWidget extends StatefulWidget {
@@ -17,7 +17,7 @@ class _PageViewState extends State<PageViewWidget> {
   final List<Widget> _pages = [
     const NotificationsPage(),
     const WelcomePage(),
-    const ThirdPage()
+    const AvariasPage()
   ];
 
   @override

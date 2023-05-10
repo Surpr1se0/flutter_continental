@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NotificationsPage extends StatelessWidget {
-  const NotificationsPage({Key? key}) : super(key: key);
+class AvariasPage extends StatelessWidget {
+  const AvariasPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class NotificationsPage extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text('Notificações', 
+                              Text('Avarias', 
                               style: TextStyle(fontSize: 18, color: Colors.orangeAccent.shade400)),
                               const SizedBox(width: 20),
                               Icon(Icons.message, color: Colors.orangeAccent.shade400),
@@ -45,7 +45,7 @@ class NotificationsPage extends StatelessWidget {
                   return SizedBox(
                     height: 30,
                     child: ListTile(
-                      title: Text('Notificação $index', 
+                      title: Text('Máquina $index', 
                       style: const TextStyle(fontSize: 13, color: Colors.white)),
                       trailing: const Icon(Icons.chevron_right),
                     ),
