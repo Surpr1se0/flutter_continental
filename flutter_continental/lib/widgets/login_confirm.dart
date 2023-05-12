@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_continental/pages/confirmation_good.dart';
-import 'package:flutter_continental/pages/login_page.dart';
+import 'package:flutter_continental/pages/welcome_page.dart';
 
-class ListsButton extends StatefulWidget {
+class LoginConfirm extends StatefulWidget {
   bool? isResponsive;
   double? size;
   Object? heroTag;
 
-  ListsButton({Key? key, this.size, this.isResponsive = false, this.heroTag})
+  LoginConfirm({Key? key, this.size, this.isResponsive = false, this.heroTag})
       : super(key: key);
 
 
   @override
-  State<ListsButton> createState() => _ListsButtonState();
+  State<LoginConfirm> createState() => _LoginConfirmState();
 }
 
-class _ListsButtonState extends State<ListsButton> {
+class _LoginConfirmState extends State<LoginConfirm> {
   bool _pressed = false;
 
   void _onPressed(){
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const LoginPage())
+      MaterialPageRoute(builder: (context) => const WelcomePage())
     );
   }
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 90,
-      height: 33,
+      height: 40,
       child: FittedBox(
         child: FloatingActionButton.extended(
           heroTag: widget.heroTag,
@@ -42,10 +41,10 @@ class _ListsButtonState extends State<ListsButton> {
             _onPressed();
           },
           icon: const Icon(
-            Icons.list,
+            Icons.login,
             size: 24.0,
           ),
-          label: const Text('Lists'),
+          label: const Text('Login'),
         ),
       ),
     );
