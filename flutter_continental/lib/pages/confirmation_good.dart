@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ConfirmationGoodPage extends StatelessWidget {
-  const ConfirmationGoodPage({Key? key});
+  const ConfirmationGoodPage({super.key});
+
+  //const ConfirmationGoodPage({super.key, Key? key});
 
   @override
   Widget build(BuildContext context) {

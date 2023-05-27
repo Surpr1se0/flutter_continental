@@ -3,7 +3,14 @@ import 'package:flutter_continental/widgets/app_large_text.dart';
 import 'package:flutter_continental/widgets/login_confirm.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key});
+  LoginPage({super.key});
+
+  //const LoginPage({super.key, Key? key});
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,7 @@ class LoginPage extends StatelessWidget {
                     color: Colors.orangeAccent.shade400,
                   ),
                   const SizedBox(height: 15),
-                  Container(
+                  SizedBox(
                     height: 40,
                     width: 190,
                     child: Padding(
@@ -39,17 +46,19 @@ class LoginPage extends StatelessWidget {
                           labelText: 'Username',
                           labelStyle: TextStyle(color: Colors.grey.shade600),
                         ),
+                        controller: emailController,
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 40,
                     width: 190,
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: TextField(
                         obscureText: true,
+                        controller: passwordController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.grey.shade800,
@@ -62,7 +71,10 @@ class LoginPage extends StatelessWidget {
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
-                  ),LoginConfirm()
+                  ),LoginConfirm(
+                    emailController: emailController,
+                    passwordController: passwordController,
+                  ),
                 ],
               ),
             ),

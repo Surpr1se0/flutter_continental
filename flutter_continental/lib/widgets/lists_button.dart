@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_continental/pages/confirmation_good.dart';
 import 'package:flutter_continental/pages/login_page.dart';
 
 class ListsButton extends StatefulWidget {
@@ -21,7 +20,7 @@ class _ListsButtonState extends State<ListsButton> {
   void _onPressed(){
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const LoginPage())
+      MaterialPageRoute(builder: (context) =>  LoginPage())
     );
   }
   @override

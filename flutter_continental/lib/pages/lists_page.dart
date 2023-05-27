@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ListsPage extends StatelessWidget {
-  const ListsPage({Key? key});
+  const ListsPage({super.key});
+
+  //const ListsPage({super.key, Key? key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_continental/pages/welcome_page.dart';
-
-import 'package:http/http.dart' as http;
 
 class LoginConfirm extends StatefulWidget {
   bool? isResponsive;
   double? size;
   Object? heroTag;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
 
-  LoginConfirm({Key? key, this.size, this.isResponsive = false, this.heroTag})
+
+  LoginConfirm({Key? key, this.size, this.isResponsive = false, this.heroTag, required this.emailController, required this.passwordController})
       : super(key: key);
 
 
@@ -19,17 +20,15 @@ class LoginConfirm extends StatefulWidget {
 class _LoginConfirmState extends State<LoginConfirm> {
   bool _pressed = false;
 
-  void _onPressed() async{
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => const WelcomePage())
-    // );
 
-    var url = Uri.http("my-json-server.typicode.com", "/typicode/demo/posts");
-    var response = await http.get(url);
-    print("Response body ${response.body}");
-    
+
+  Future _onPressed() async{
+    String email = widget.emailController.text.trim();
+    String password = widget.passwordController.text.trim();
+   
+    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
   }
+  
   @override
   Widget build(BuildContext context) {
     return SizedBox(
