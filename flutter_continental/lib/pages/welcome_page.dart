@@ -4,6 +4,7 @@ import 'package:flutter_continental/widgets/app_text.dart';
 import 'package:flutter_continental/widgets/lists_button.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../widgets/alert_button.dart';
 
@@ -19,6 +20,8 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('EEEE, d MMMM y').format(now);
+
+    User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       body: Container(
@@ -75,7 +78,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   const SizedBox(height: 5),
                   AppLargeText(text: 'Welcome', size: 17),
                   AppText(
-                    text: 'José Almeida',
+                    text: '${user!.email}',
                     size: 12,
                     color: Colors.orangeAccent.shade400,
                   ),
