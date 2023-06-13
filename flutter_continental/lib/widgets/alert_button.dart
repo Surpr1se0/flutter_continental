@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_continental/pages/alerts_page.dart';
+import 'package:flutter_continental/pages/Log_out.dart';
 
 class AlertButton extends StatefulWidget {
   bool? isResponsive;
@@ -18,7 +18,7 @@ class _AlertButtonState extends State<AlertButton> {
   void _onPressed(){
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const AlertsPage())
+      MaterialPageRoute(builder: (context) => const LogoutPage())
     );
   }
   @override
@@ -41,7 +41,7 @@ class _AlertButtonState extends State<AlertButton> {
             Icons.warning_amber_rounded,
             size: 24.0,
           ),
-          label: const Text('Warnings'),
+          label: const Text('Log out'),
         ),
       ),
     );

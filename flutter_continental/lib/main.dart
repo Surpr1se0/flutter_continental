@@ -1,47 +1,112 @@
+import 'dart:async';
+import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_continental/pages/page_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_continental/pages/login_page.dart';
+import 'package:dart_amqp/dart_amqp.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'Controllers/HomeController.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Get.put(HomeController());
+    _setupRabbitMQ();
+
     return MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              User? user = snapshot.data;
-              // Verificar se o usuário não é nulo
-              if (user != null) {
-                // Obtém o email e o token
-                String email = user.email ?? 'Nenhum email fornecido';
-                user.getIdToken().then((String token) {
-                  print('Email: $email, Token: $token');
-                  // Use o email e o token conforme necessário
-                });
-              }
-              return const PageViewWidget();
-            } else {
-              return LoginPage();
+      navigatorKey: navigatorKey,
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            User? user = snapshot.data;
+            if (user != null) {
+              String email = user.email ?? 'Nenhum email fornecido';
+              user.getIdToken().then((String token) {
+                print('Email: $email, Token: $token');
+              });
             }
-          },
+            return const PageViewWidget();
+          } else {
+            return LoginPage();
+          }
+        },
+      ),
+    );
+  }
+
+  void _setupRabbitMQ() async {
+    ConnectionSettings settings = ConnectionSettings(
+      host: "192.168.28.86",
+    );
+
+      Client client = Client(settings: settings);
+      client.channel().then((Channel channel) async {
+      Queue queue = await channel.queue("notification");
+      Exchange exchange = await channel.exchange("alertas", ExchangeType.TOPIC);
+      Consumer consumer = await exchange.bindQueueConsumer("notification", ["alerts.maintenance.new"]);
+
+      consumer.listen((AmqpMessage message) {
+        print(" [x] Received alert: ${message.payloadAsJson}");
+
+        var payload = jsonDecode(message.payloadAsString);
+
+
+        //String linhaId = payload["linhaId"];
+
+
+        // Now, you can show the AlertDialog with the data received.
+        navigatorKey.currentState!.push(MaterialPageRoute<void>(
+          builder: (BuildContext context) => AlertDialog(
+            title: Text("New alert"),
+            content: Text("Alert received: ${message.payloadAsJson}"),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Close'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
         ));
+      });
+    });
   }
 }
+
+
+
+Future<String?> getUserRole(User user) async {
+  final IdTokenResult tokenResult = await user.getIdTokenResult();
+  final claims = tokenResult.claims;
+
+  if (claims != null) {
+    if (claims.containsKey('role')) {
+      return claims['role'] as String?;
+    }
+  }
+
+  return null;
+}
+

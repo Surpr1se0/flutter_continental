@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
+import '../Controllers/AvariaClasse.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AvariasPage extends StatelessWidget {
   const AvariasPage({Key? key}) : super(key: key);
+
+  Future<String?> getToken() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    return user?.getIdToken();
+  }
+
+  Future<List<AvariaNotification>> getAvarias() async {
+    final token = await getToken();
+    final url = Uri.https('192.168.28.86:7071', 'Alertas/GetMaintenanceMessages');
+
+    final response = await http.get(url, headers: {'Authorization': '$token'});
+
+    final body = jsonDecode(response.body);
+
+    return body.map<AvariaNotification>(AvariaNotification.fromJson).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +46,13 @@ class AvariasPage extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text('Avarias', 
-                              style: TextStyle(fontSize: 18, color: Colors.orangeAccent.shade400)),
+                              Text('Avarias',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.orangeAccent.shade400)),
                               const SizedBox(width: 20),
-                              Icon(Icons.message, color: Colors.orangeAccent.shade400),
+                              Icon(Icons.message,
+                                  color: Colors.orangeAccent.shade400),
                             ],
                           ),
                         ],
@@ -39,20 +62,56 @@ class AvariasPage extends StatelessWidget {
             ),
             Expanded(
               flex: 10,
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: ((context, index) {
-                  return SizedBox(
-                    height: 30,
-                    child: ListTile(
-                      title: Text('Máquina $index', 
-                      style: const TextStyle(fontSize: 13, color: Colors.white)),
-                      trailing: const Icon(Icons.chevron_right),
-                    ),
-                  );
-                }),
-                separatorBuilder: (_, __) => const Divider(),
-                itemCount: 10,
+              child: FutureBuilder<List<AvariaNotification>>(
+                future: getAvarias(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Text('Erro: ${snapshot.error}');
+                  } else {
+                    var avarias = snapshot.data;
+                    if (avarias == null || avarias.isEmpty) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.build, size: 50, color: Colors.orangeAccent.shade400),
+                          Text('Não existem',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.orangeAccent.shade400)),
+                          Text('registos de Avarias',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.orangeAccent.shade400)),
+                        ],
+                      );
+                    } else {
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: avarias.length,
+                        itemBuilder: ((context, index) {
+                          var avaria = avarias[index];
+                          return Card(
+                            child: ListTile(
+                              title: Text('Linha: ${avaria.linhaId}',
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.white)),
+                              trailing: Text(
+                                '${avaria.prioridade}',
+                                style: TextStyle(
+                                    fontSize: 13, color: Colors.white),
+                              ),
+                            ),
+                          );
+                        }),
+                        separatorBuilder: (_, __) => const Divider(),
+                      );
+                    }
+                  }
+                },
               ),
             ),
           ],

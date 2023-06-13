@@ -9,7 +9,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/alert_button.dart';
 
 class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
+  final String role;
+
+  WelcomePage({Key? key, required this.role}) : super(key: key);
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();
@@ -72,13 +74,13 @@ class _WelcomePageState extends State<WelcomePage> {
                     children: [
                       AlertButton(),
                       const SizedBox(width: 6,),
-                      ListsButton(heroTag: 'button1'),
+                      if (widget.role == "funcionario") ListsButton(heroTag: 'button1'),
                     ],
                   ),
                   const SizedBox(height: 5),
                   AppLargeText(text: 'Welcome', size: 17),
                   AppText(
-                    text: '${user!.email}',
+                    text: '${user!.displayName}',
                     size: 12,
                     color: Colors.orangeAccent.shade400,
                   ),

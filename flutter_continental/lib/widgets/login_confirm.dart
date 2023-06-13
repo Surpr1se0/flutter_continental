@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginConfirm extends StatefulWidget {
   bool? isResponsive;
@@ -8,14 +9,14 @@ class LoginConfirm extends StatefulWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
-  LoginConfirm(
-      {Key? key,
-      this.size,
-      this.isResponsive = false,
-      this.heroTag,
-      required this.emailController,
-      required this.passwordController})
-      : super(key: key);
+  LoginConfirm({
+    Key? key,
+    this.size,
+    this.isResponsive = false,
+    this.heroTag,
+    required this.emailController,
+    required this.passwordController,
+  }) : super(key: key);
 
   @override
   State<LoginConfirm> createState() => _LoginConfirmState();
@@ -24,32 +25,31 @@ class LoginConfirm extends StatefulWidget {
 class _LoginConfirmState extends State<LoginConfirm> {
   bool _pressed = false;
 
-  Future _onPressed() async {
+  Future<void> _onPressed() async {
     String email = widget.emailController.text.trim();
     String password = widget.passwordController.text.trim();
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      // Verifica se userCredential.user não é nulo antes de chamar getIdToken
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      
       if (userCredential.user != null) {
         String token = await userCredential.user!.getIdToken();
-        print(token); // imprime o token no console
+        print('Login successful! Email: $email, Token: $token'); // Log the successful login
+        //SharedPreferences prefs = await SharedPreferences.getInstance();
+        //await prefs.setInt('login_time', DateTime.now().millisecondsSinceEpoch);
       } else {
-        // Trata o caso em que userCredential.user é nulo
-        print('Erro: userCredential.user é nulo');
+        print('Login failed! UserCredential.user is null'); // Log the failed login
       }
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       if (e.code == 'user-not-found') {
-        errorMessage = 'Nenhum usuário encontrado para esse e-mail.';
+        errorMessage = 'No user found for this email.';
       } else if (e.code == 'wrong-password') {
-        errorMessage = 'Senha errada fornecida para esse usuário.';
+        errorMessage = 'Wrong password provided for this user.';
       } else {
-        errorMessage = e.message ?? 'Um erro desconhecido ocorreu.';
+        errorMessage = e.message ?? 'An unknown error occurred.';
       }
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(errorMessage)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage)));
     } catch (e) {
       print(e);
     }
