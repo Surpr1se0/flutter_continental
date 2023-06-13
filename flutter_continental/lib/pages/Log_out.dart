@@ -8,11 +8,11 @@ class LogoutPage extends StatelessWidget {
     try {
       await FirebaseAuth.instance.signOut();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Desconectado com sucesso!')),
+        const SnackBar(content: Text('Desconectado com sucesso!')),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao desconectar!')),
+        const SnackBar(content: Text('Erro ao desconectar!')),
       );
     }
   }
@@ -27,7 +27,7 @@ class LogoutPage extends StatelessWidget {
             backgroundColor: MaterialStateProperty.all(Colors.orangeAccent.shade400),
           ),
           onPressed: () => _logOut(context),
-          child: Text(
+          child: const Text(
             'Logout',
             style: TextStyle(
               color: Colors.black87,

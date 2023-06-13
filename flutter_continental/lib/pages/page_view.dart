@@ -20,8 +20,8 @@ class _PageViewState extends State<PageViewWidget> {
   // Lista padrão de páginas para o funcionário
   List<Widget> _pages = [
     const NotificationsPage(),
-    WelcomePage(role: 'default'),
-    const AvariasPage()
+    const WelcomePage(role: 'default'),
+    const AlertsPage()
   ];
 
   @override
@@ -37,7 +37,7 @@ class _PageViewState extends State<PageViewWidget> {
           setState(() {
             _pages = [
               const NotificationsPage(),
-              WelcomePage(role: 'supervisor'),
+              const WelcomePage(role: 'supervisor'),
               const AvariasPage()
             ];
           });
@@ -46,7 +46,7 @@ class _PageViewState extends State<PageViewWidget> {
           setState(() {
             _pages = [
               const NotificationsPage(),
-              WelcomePage(role: 'funcionario'),
+              const WelcomePage(role: 'funcionario'),
               const AlertsPage()
             ];
           });

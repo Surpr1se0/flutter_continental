@@ -66,7 +66,7 @@ class AvariasPage extends StatelessWidget {
                 future: getAvarias(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Text('Erro: ${snapshot.error}');
                   } else {
@@ -97,11 +97,11 @@ class AvariasPage extends StatelessWidget {
                           return Card(
                             child: ListTile(
                               title: Text('Linha: ${avaria.linhaId}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13, color: Colors.white)),
                               trailing: Text(
-                                '${avaria.prioridade}',
-                                style: TextStyle(
+                                avaria.prioridade,
+                                style: const TextStyle(
                                     fontSize: 13, color: Colors.white),
                               ),
                             ),

@@ -11,7 +11,7 @@ import '../widgets/alert_button.dart';
 class WelcomePage extends StatefulWidget {
   final String role;
 
-  WelcomePage({Key? key, required this.role}) : super(key: key);
+  const WelcomePage({Key? key, required this.role}) : super(key: key);
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();

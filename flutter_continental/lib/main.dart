@@ -1,15 +1,12 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_continental/pages/page_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_continental/pages/login_page.dart';
 import 'package:dart_amqp/dart_amqp.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'Controllers/HomeController.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -17,11 +14,11 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}): super(key: key);
+  const MyApp({Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +34,8 @@ class MyApp extends StatelessWidget {
       ),
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
+        builder: (context,snapshot) {
           if (snapshot.hasData) {
-            User? user = snapshot.data;
-            if (user != null) {
-              String email = user.email ?? 'Nenhum email fornecido';
-              user.getIdToken().then((String token) {
-                print('Email: $email, Token: $token');
-              });
-            }
             return const PageViewWidget();
           } else {
             return LoginPage();
@@ -78,11 +68,11 @@ class MyApp extends StatelessWidget {
         // Now, you can show the AlertDialog with the data received.
         navigatorKey.currentState!.push(MaterialPageRoute<void>(
           builder: (BuildContext context) => AlertDialog(
-            title: Text("New alert"),
+            title: const Text("New alert"),
             content: Text("Alert received: ${message.payloadAsJson}"),
             actions: <Widget>[
               TextButton(
-                child: Text('Close'),
+                child: const Text('Close'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

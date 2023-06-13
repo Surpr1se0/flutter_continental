@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import '../Controllers/HomeController.dart';
 
 class NumberSelectorPage extends StatefulWidget {
+  const NumberSelectorPage({super.key});
+
   @override
   _NumberSelectorPageState createState() => _NumberSelectorPageState();
 }
@@ -20,8 +22,8 @@ class _NumberSelectorPageState extends State<NumberSelectorPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
+            const Padding(
+              padding: EdgeInsets.all(10.0),
               child: Text(
                 'Linha:',
                 style: TextStyle(color: Colors.white, fontSize: 22),
@@ -38,7 +40,7 @@ class _NumberSelectorPageState extends State<NumberSelectorPage> {
                       onChanged: (value) {
                         controller.selectedLine.value = value;
                       },
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                           color: Colors.white70), // default text style
                       selectedTextStyle: TextStyle(
                           color: Colors
@@ -54,11 +56,11 @@ class _NumberSelectorPageState extends State<NumberSelectorPage> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('OK',
-                    style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.orangeAccent.shade400,
+                  backgroundColor: Colors.orangeAccent.shade400,
                 ),
+                child: const Text('OK',
+                    style: TextStyle(color: Colors.white)),
               ),
             ),
           ],

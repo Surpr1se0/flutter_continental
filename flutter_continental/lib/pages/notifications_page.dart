@@ -67,7 +67,7 @@ class NotificationsPage extends StatelessWidget {
                 future: getAvarias(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Text('Erro: ${snapshot.error}');
                   } else {
@@ -100,7 +100,7 @@ class NotificationsPage extends StatelessWidget {
                             color: Colors.grey.withOpacity(
                                 0.5), // Changes background color of the card
                             child: ListTile(
-                              title: Text(
+                              title: const Text(
                                 'Avaria',
                                 style: TextStyle(
                                   fontSize: 13,
@@ -109,7 +109,7 @@ class NotificationsPage extends StatelessWidget {
                               ),
                               trailing: Text(
                                 'Linha: ${avaria.linhaId}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,
                                 ),
