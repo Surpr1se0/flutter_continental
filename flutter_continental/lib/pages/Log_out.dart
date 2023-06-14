@@ -1,21 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_continental/widgets/auth_service.dart';
 
 class LogoutPage extends StatelessWidget {
   const LogoutPage({Key? key}) : super(key: key);
-
-  void _logOut(BuildContext context) async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Desconectado com sucesso!')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Erro ao desconectar!')),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +13,9 @@ class LogoutPage extends StatelessWidget {
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.orangeAccent.shade400),
           ),
-          onPressed: () => _logOut(context),
+          onPressed: () => AuthService.logOut(context),
           child: const Text(
-            'Logout',
+            'Sair',
             style: TextStyle(
               color: Colors.black87,
               fontSize: 24,

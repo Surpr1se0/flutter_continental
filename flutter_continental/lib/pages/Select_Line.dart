@@ -23,35 +23,38 @@ class _NumberSelectorPageState extends State<NumberSelectorPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(0.5),
               child: Text(
                 'Linha:',
-                style: TextStyle(color: Colors.white, fontSize: 22),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
             Expanded(
               child: Center(
                 child: GetX<HomeController>(
                   builder: (controller) {
-                    return NumberPicker(
-                      value: controller.selectedLine.value,
-                      minValue: 1,
-                      maxValue: 50,
-                      onChanged: (value) {
-                        controller.selectedLine.value = value;
-                      },
-                      textStyle: const TextStyle(
-                          color: Colors.white70), // default text style
-                      selectedTextStyle: TextStyle(
-                          color: Colors
-                              .orangeAccent.shade400), // selected number style
+                    return SizedBox(
+                      height: 150.0,
+                      child: NumberPicker(
+                        value: controller.selectedLine.value,
+                        minValue: 1,
+                        maxValue: 50,
+                        onChanged: (value) {
+                          controller.selectedLine.value = value;
+                        },
+                        textStyle: const TextStyle(
+                            color: Colors.white70), // default text style
+                        selectedTextStyle: TextStyle(
+                            color: Colors
+                                .orangeAccent.shade400), // selected number style
+                      ),
                     );
                   },
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(2.0),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);

@@ -26,7 +26,7 @@ class LoginPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   AppLargeText(
-                    text: 'Login',
+                    text: 'Iniciar Sessão',
                     size: 25,
                     color: Colors.orangeAccent.shade400,
                   ),
@@ -43,7 +43,7 @@ class LoginPage extends StatelessWidget {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          labelText: 'Username',
+                          labelText: 'Email',
                           labelStyle: TextStyle(color: Colors.grey.shade600),
                         ),
                         controller: emailController,

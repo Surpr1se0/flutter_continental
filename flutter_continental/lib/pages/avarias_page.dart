@@ -14,9 +14,10 @@ class AvariasPage extends StatelessWidget {
 
   Future<List<AvariaNotification>> getAvarias() async {
     final token = await getToken();
-    final url = Uri.https('192.168.28.86:7071', 'Alertas/GetMaintenanceMessages');
+    final url = Uri.http('192.168.28.86:7071', 'Alert/GetMaintenanceMessages');
 
-    final response = await http.get(url, headers: {'Authorization': '$token'});
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer $token'});
 
     final body = jsonDecode(response.body);
 
@@ -28,7 +29,7 @@ class AvariasPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black87,
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -50,7 +51,7 @@ class AvariasPage extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.orangeAccent.shade400)),
-                              const SizedBox(width: 20),
+                              const SizedBox(width: 10),
                               Icon(Icons.message,
                                   color: Colors.orangeAccent.shade400),
                             ],
@@ -89,20 +90,54 @@ class AvariasPage extends StatelessWidget {
                         ],
                       );
                     } else {
+                      // Sort the list of avarias by prioridade in descending order
+                      avarias.sort((a, b) => int.parse(b.prioridade).compareTo(int.parse(a.prioridade)));
+                      
                       return ListView.separated(
                         shrinkWrap: true,
                         itemCount: avarias.length,
                         itemBuilder: ((context, index) {
                           var avaria = avarias[index];
+
+                          int prioridadeInt;
+                          try {
+                            prioridadeInt = int.parse(avaria.prioridade);
+                          } catch (_) {
+                            // If the parse fails, we default it to 0
+                            prioridadeInt = 0;
+                          }
+
+                          String prioridadeText = avaria.prioridade;
+                          Color textColor = Colors.white;
+
+                          switch (prioridadeInt) {
+                            case 3:
+                              prioridadeText = 'Elevada';
+                              textColor = Color(0xffd00000);
+                              break;
+                            case 2:
+                              prioridadeText = 'Moderada';
+                              textColor = Color(0xffe85d04);
+                              break;
+                            case 1:
+                              prioridadeText = 'Baixa';
+                              textColor = Color(0xffffba08);
+                              break;
+                            default:
+                              textColor = Colors.white;
+                          }
+
                           return Card(
+                            color: Colors.black12.withOpacity(
+                                0.5),
                             child: ListTile(
                               title: Text('Linha: ${avaria.linhaId}',
                                   style: const TextStyle(
                                       fontSize: 13, color: Colors.white)),
                               trailing: Text(
-                                avaria.prioridade,
-                                style: const TextStyle(
-                                    fontSize: 13, color: Colors.white),
+                                prioridadeText,
+                                style: TextStyle(
+                                    fontSize: 13, color: textColor),
                               ),
                             ),
                           );

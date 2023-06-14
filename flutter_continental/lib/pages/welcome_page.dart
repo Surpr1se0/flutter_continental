@@ -68,17 +68,17 @@ class _WelcomePageState extends State<WelcomePage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 6,),
+                  const SizedBox(height: 6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AlertButton(),
-                      const SizedBox(width: 6,),
+                      const SizedBox(width: 2),
                       if (widget.role == "funcionario") ListsButton(heroTag: 'button1'),
                     ],
                   ),
                   const SizedBox(height: 5),
-                  AppLargeText(text: 'Welcome', size: 17),
+                  AppLargeText(text: 'Bem-Vindo', size: 17),
                   AppText(
                     text: '${user!.displayName}',
                     size: 12,

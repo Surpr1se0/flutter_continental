@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_continental/pages/page_view.dart';
 
 class LoginConfirm extends StatefulWidget {
   bool? isResponsive;
@@ -33,7 +34,9 @@ class _LoginConfirmState extends State<LoginConfirm> {
       
       if (userCredential.user != null) {
         String token = await userCredential.user!.getIdToken();
-        print('Login successful! Email: $email, Token: $token'); // Log the successful login
+        print('Login successful! Email: $email, Token: $token'); 
+        PageViewWidget();
+        // Log the successful login
         //SharedPreferences prefs = await SharedPreferences.getInstance();
         //await prefs.setInt('login_time', DateTime.now().millisecondsSinceEpoch);
       } else {

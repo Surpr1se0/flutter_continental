@@ -3,6 +3,9 @@ import '../Controllers/AvariaClasse.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_continental/pages/AvariaDetailPage.dart';
+import '../widgets/SnackBar.dart';
+
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -10,6 +13,21 @@ class NotificationsPage extends StatelessWidget {
   Future<String?> getToken() async {
     User? user = FirebaseAuth.instance.currentUser;
     return user?.getIdToken();
+  }
+
+  Future<String?> getUserRole() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final IdTokenResult tokenResult = await user.getIdTokenResult();
+      final claims = tokenResult.claims;
+
+      if (claims != null) {
+        if (claims.containsKey('role')) {
+          return claims['role'] as String?;
+        }
+      }
+    }
+    return null;
   }
 
   Future<List<AvariaNotification>> getAvarias() async {
@@ -29,7 +47,7 @@ class NotificationsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black87,
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -51,7 +69,7 @@ class NotificationsPage extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.orangeAccent.shade400)),
-                              const SizedBox(width: 20),
+                              const SizedBox(width: 5),
                               Icon(Icons.message,
                                   color: Colors.orangeAccent.shade400),
                             ],
@@ -91,15 +109,31 @@ class NotificationsPage extends StatelessWidget {
                         ],
                       );
                     } else {
+                      avarias.sort((a, b) => b.id.compareTo(a.id));
+
                       return ListView.separated(
                         shrinkWrap: true,
                         itemCount: avarias.length,
                         itemBuilder: ((context, index) {
                           var avaria = avarias[index];
-                          return Card(
-                            color: Colors.grey.withOpacity(
-                                0.5), // Changes background color of the card
-                            child: ListTile(
+                          return GestureDetector(
+                            onTap: () async {
+                              String? role = await getUserRole();
+                              if (role == "supervisor") {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AvariaDetailPage(avaria: avaria),
+                                  ),
+                                );
+                              } else {
+                               showCustomSnackBar(context, 'Acesso Negado. Restrito a Supervisores');
+                              }
+                            },
+                          child: Card(
+                            color: Colors.black12.withOpacity(
+                                0.5),
+                                  child: ListTile(
                               title: const Text(
                                 'Avaria',
                                 style: TextStyle(
@@ -115,6 +149,7 @@ class NotificationsPage extends StatelessWidget {
                                 ),
                               ),
                             ),
+                          ),
                           );
                         }),
                         separatorBuilder: (_, __) => const Divider(),

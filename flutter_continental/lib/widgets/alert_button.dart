@@ -24,7 +24,7 @@ class _AlertButtonState extends State<AlertButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 90,
+      width: 85,
       height: 40,
       child: FittedBox(
         child: FloatingActionButton.extended(

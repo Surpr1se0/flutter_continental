@@ -27,7 +27,7 @@ class _ListsButtonState extends State<ListsButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 90,
+      width: 85,
       height: 33,
       child: FittedBox(
         child: FloatingActionButton.extended(
@@ -45,7 +45,7 @@ class _ListsButtonState extends State<ListsButton> {
             Icons.list,
             size: 24.0,
           ),
-          label: const Text('Lists'),
+          label: const Text('Linhas'),
         ),
       ),
     );
