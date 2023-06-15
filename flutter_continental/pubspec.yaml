@@ -31,18 +31,35 @@ dependencies:
   flutter:
     sdk: flutter
 
-
+  build_runner: ^2.1.7
+  json_annotation: ^4.6.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   slide_digital_clock: ^1.0.3
   intl: ^0.17.0
+  http: ^1.0.0
+  firebase_core: ^2.13.0
+  firebase_auth: ^4.6.1
+  dart_amqp: ^0.2.5
+  permission_handler: ^8.2.2
+  flutter_local_notifications: ^13.0.0
+  numberpicker: ^2.1.2
+  get: ^4.6.5
+  shared_preferences: ^2.1.2
+  dio: ^5.2.1
+  flutter_launcher_icons: ^0.13.1
 
-  
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/Continental-Logo-Emblem.png"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  json_serializable: any
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -63,6 +80,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/continental.png
+    - assets/images/arrow.png
+    - assets/images/arrow_reversed.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
